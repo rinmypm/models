@@ -1,12 +1,16 @@
 import praw
 from configobj import ConfigObj
 
-conf = ConfigObj('reddit-config.env')
+def main():
+    conf = ConfigObj('reddit-config.env')
 
-reddit = praw.Reddit(client_id=conf['client-id'],
-                     client_secret=conf['client-secret'],
-                     user_agent=conf['user-agent'])
+    reddit = praw.Reddit(client_id=conf['client-id'],
+                         client_secret=conf['client-secret'],
+                         user_agent=conf['user-agent'])
 
-for submission in reddit.subreddit('learnpython').hot(limit=10):
-    print(submission.title)
+    # Get top front page listing title
+    for submission in reddit.front.hot(limit=20):
+        print(submission.title)
 
+if __name__ == "__main__":
+    main()
